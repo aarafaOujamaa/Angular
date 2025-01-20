@@ -1,0 +1,84 @@
+@if (notify) {
+  <div class="toast" [ngClass]="notification.position"> <!-- case static - dynamique css ,use tab-->
+    <div class="alert" [ngClass]="notification.alertClass">
+      <span>{{notification.message}}</span>
+    </div>
+  </div>
+}
+
+
+<div
+  class="hero"
+  style="background-image: url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp);">
+  <div class="hero-overlay bg-opacity-60"></div>
+  <div class="hero-content text-neutral-content text-center">
+    <div class="max-w-md">
+      <h1 class="mb-5 text-5xl font-bold">{{ title }}</h1>
+      <p class="mb-5">
+        Your Guide 
+      </p>
+      <button (click)="toggleForm()" 
+      [ngStyle]="{
+       'color': showform ? 'red' : 'grey',
+       'font-size': editable ? '20px' : '10px'
+      }"
+      [ngClass]= "{
+         'btn-primary': showform && !editable,
+         'btn-neutral': !showform,
+         'btn-warning': editable 
+       }"
+      class="btn btn-neutral">{{ changeToggleBtn() }}</button>
+    </div>
+  </div>
+</div>
+
+<!--.flex>h1+btn.btn.btn-neutral-->
+<!--<div class="flex justify-between mt-14 mx-6"> mx-6 : margin x : horizontal-->
+    <!--<h1 class="text-3xl font-bold">{{showTitle()}}</h1>  interpolation-->
+  <!--  <button class="btn btn-neutral">Add</button>
+</div>-->
+
+<!--Create in one line and in colonne order input>btn>Menu gap: space btw elements, margin-top:52-->
+<div class="flex flex-col gap-4 items-center mt-20"> 
+  @if (showform) {
+    <input  (keyup.enter)="submit()"  [(ngModel)]="mytodo" type="text" [placeholder]="placeHolder" class="input w-full max-w-xs" />
+    @if(editable) {
+      <div class="flex gap-4">   
+        <button (click)='submit()' class="btn btn-warning">Update</button>
+        <button  (click)='initTodo()' class="btn-neutral">Cancel</button>
+      </div>
+   
+    } @else {
+      <button (click)='submit()' class="btn btn-primary">Create</button>
+    }
+  }
+  @else {
+    <p></p>
+  }
+    
+    
+    <ul class="menu bg-base-200 rounded-box w-80 h-auto">
+
+      @for (todo of todos; track todo; let i = $index; let e = $even ; 
+           let o = $odd; let f = $first ; let l = $last) {
+
+          <li>
+            <!-- <span>{{i}} - {{e}} - {{o}} - {{f}} - {{l}} - {{todo}}</span> -->
+            <span (dblclick)="deleteTodo(i)" >{{todo}}</span>
+            <div class="justify-end">
+                <app-add-icon (click)="editTodo(todo, i)" class="btn btn-warning btn-sm" [size]="4"></app-add-icon>
+
+                @if(!editable) {
+                  <app-delete-icon (click)="deleteTodo(i)"  class="btn btn-error btn-sm" [size]="4"></app-delete-icon> 
+
+
+                }
+                
+            </div>
+        </li>
+      }
+      @empty {
+        No todos yet!
+      }
+      </ul>
+</div>

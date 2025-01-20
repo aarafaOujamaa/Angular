@@ -1,0 +1,47 @@
+<div class="flex mt-20 justify-center">
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Published</th>
+            <th class="hidden md:table-cell">Image</th>
+            <th>Title</th>
+            <th class="hidden md:table-cell">Content</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+            @for(course of coursesData; track i; let i=$index) {
+                <tr>
+                    <th>
+                        <input type="checkbox" class="toggle toggle-info" [checked]="course.active" />
+                    </th>
+                    <td class="hidden md:table-cell">
+                        <img width="100px"  class="rounded-box" [src]="course.url" [alt]="course.title">
+                    </td>
+                    <td>
+                        {{course.title}}
+                    </td>
+                    <td class="hidden md:table-cell">
+                        {{course.content}}
+                    </td>
+                    <td>
+                        <div class="badge badge-lg badge-outline badge-accent">{{course.price}}</div>
+                    </td>
+                    <td noWrap="true">
+                        <button  (click)="editCourse(course)" data-tip="Edit" class="tooltip btn btn-sm btn-warning">
+                            <app-edit-icon [size]="6"></app-edit-icon>                        
+                        </button>
+                        @if(course.id !=null) {
+                            <button (click)="deleteCourse(course.id)"  data-tip="Delete" class="tooltip btn btn-sm btn-error">
+                                <app-delete-icon [size]="6"></app-delete-icon>                                        
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+</div>

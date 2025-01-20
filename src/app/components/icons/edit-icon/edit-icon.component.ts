@@ -1,0 +1,13 @@
+import { NgClass } from '@angular/common';
+import { Component, Input, input } from '@angular/core';
+
+@Component({
+  selector: 'app-edit-icon',
+  imports: [NgClass],
+  templateUrl: './edit-icon.component.html',
+  styleUrl: './edit-icon.component.css'
+})
+export class EditIconComponent {
+  @Input() size: number=4;
+
+}
